@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nclg.mapper.NaireTypeMapper">
+
+    <resultMap type="com.nclg.entity.NaireType" id="NaireTypeResultMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="naireId" column="naire_id" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="departmentId" column="department_id" jdbcType="INTEGER"/>
+        <result property="subjectId" column="subject_id" jdbcType="INTEGER"/>
+        <result property="classesId" column="classes_id" jdbcType="INTEGER"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="table_field">
+      id, naire_id, type, department_id, subject_id, classes_id, remarks      
+    </sql>
+
+    <!--通过Id查询单个-->
+    <select id="getById" resultMap="NaireTypeResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="table_field"/>
+        from question_naire.naire_type
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+
+    <!--通过实体不为空的属性作为筛选条件查询列表-->
+    <select id="listByEntity" resultMap="NaireTypeResultMap" parameterType="com.nclg.entity.NaireType">
+        select
+        <include refid="table_field"/>
+        from question_naire.naire_type
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="naireId != null">
+                and naire_id = #{naireId,jdbcType=INTEGER}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="departmentId != null">
+                and department_id = #{departmentId,jdbcType=INTEGER}
+            </if>
+            <if test="subjectId != null">
+                and subject_id = #{subjectId,jdbcType=INTEGER}
+            </if>
+            <if test="classesId != null">
+                and classes_id = #{classesId,jdbcType=INTEGER}
+            </if>
+            <if test="remarks != null">
+                and remarks = #{remarks,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!--通过实体不为空的属性作为筛选条件查询单个-->
+    <select id="getByEntity" resultMap="NaireTypeResultMap" parameterType="com.nclg.entity.NaireType">
+        select
+        <include refid="table_field"/>
+        from question_naire.naire_type
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="naireId != null">
+                and naire_id = #{naireId,jdbcType=INTEGER}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="departmentId != null">
+                and department_id = #{departmentId,jdbcType=INTEGER}
+            </if>
+            <if test="subjectId != null">
+                and subject_id = #{subjectId,jdbcType=INTEGER}
+            </if>
+            <if test="classesId != null">
+                and classes_id = #{classesId,jdbcType=INTEGER}
+            </if>
+            <if test="remarks != null">
+                and remarks = #{remarks,jdbcType=VARCHAR}
+            </if>
+            limit 0,1
+        </where>
+    </select>
+
+    <!--通过实体不为空的属性作为or like筛选条件查询列表-->
+    <select id="listByEntityLike" resultMap="NaireTypeResultMap" parameterType="com.nclg.entity.NaireType">
+        select
+        <include refid="table_field"/>
+        from question_naire.naire_type
+        <where>
+            <if test="id != null">
+                or id like #{id,jdbcType=INTEGER}
+            </if>
+            <if test="naireId != null">
+                or naire_id like #{naireId,jdbcType=INTEGER}
+            </if>
+            <if test="type != null">
+                or type like #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="departmentId != null">
+                or department_id like #{departmentId,jdbcType=INTEGER}
+            </if>
+            <if test="subjectId != null">
+                or subject_id like #{subjectId,jdbcType=INTEGER}
+            </if>
+            <if test="classesId != null">
+                or classes_id like #{classesId,jdbcType=INTEGER}
+            </if>
+            <if test="remarks != null">
+                or remarks like #{remarks,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!--通过Id列表作为筛选条件查询列表，列表长度不为0-->
+    <select id="listByIds" resultMap="NaireTypeResultMap" parameterType="list">
+        select
+        <include refid="table_field"/>
+        from question_naire.naire_type
+        where id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--新增实体属性不为null的列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="com.nclg.entity.NaireType">
+        insert into question_naire.naire_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="naireId != null">
+                naire_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="departmentId != null">
+                department_id,
+            </if>
+            <if test="subjectId != null">
+                subject_id,
+            </if>
+            <if test="classesId != null">
+                classes_id,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="naireId != null">
+                #{naireId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                #{departmentId,jdbcType=INTEGER},
+            </if>
+            <if test="subjectId != null">
+                #{subjectId,jdbcType=INTEGER},
+            </if>
+            <if test="classesId != null">
+                #{classesId,jdbcType=INTEGER},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--批量新增所有列，列表长度不能为0，且列表id统一为null或者统一不为null-->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true" parameterType="list">
+        insert into question_naire.naire_type
+        (<if test="id != null">id,</if>naire_id, type, department_id, subject_id, classes_id, remarks)
+        values
+        <foreach item="item" collection="list" separator="," open="" close="" index="index">
+            (<if test="id != null">#{id,jdbcType=INTEGER},</if>#{naireId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR},
+            #{departmentId,jdbcType=INTEGER}, #{subjectId,jdbcType=INTEGER}, #{classesId,jdbcType=INTEGER},
+            #{remarks,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <!--通过主键修改实体属性不为null的列-->
+    <update id="update" parameterType="com.nclg.entity.NaireType">
+        update question_naire.naire_type
+        <set>
+            <if test="naireId != null">
+                naire_id = #{naireId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentId != null">
+                department_id = #{departmentId,jdbcType=INTEGER},
+            </if>
+            <if test="subjectId != null">
+                subject_id = #{subjectId,jdbcType=INTEGER},
+            </if>
+            <if test="classesId != null">
+                classes_id = #{classesId,jdbcType=INTEGER},
+            </if>
+            <if test="remarks != null and remarks != ''">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--通过主键修改实体列表，列表长度不能为0，注意：当实体属性为null时，对应的列也会别更新为null-->
+    <update id="updateBatch" parameterType="list">
+        update question_naire.naire_type
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="naire_id = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when id = #{item.id} then #{item.naireId}
+                </foreach>
+            </trim>
+            <trim prefix="type = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when id = #{item.id} then #{item.type}
+                </foreach>
+            </trim>
+            <trim prefix="department_id = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when id = #{item.id} then #{item.departmentId}
+                </foreach>
+            </trim>
+            <trim prefix="subject_id = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when id = #{item.id} then #{item.subjectId}
+                </foreach>
+            </trim>
+            <trim prefix="classes_id = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when id = #{item.id} then #{item.classesId}
+                </foreach>
+            </trim>
+            <trim prefix="remarks = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when id = #{item.id} then #{item.remarks}
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from question_naire.naire_type where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <!--通过实体非空属性删除-->
+    <delete id="deleteByEntity" parameterType="com.nclg.entity.NaireType">
+        delete from question_naire.naire_type
+        <where>
+            <if test="naireId != null">
+                and naire_id = #{naireId,jdbcType=INTEGER}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="departmentId != null">
+                and department_id = #{departmentId,jdbcType=INTEGER}
+            </if>
+            <if test="subjectId != null">
+                and subject_id = #{subjectId,jdbcType=INTEGER}
+            </if>
+            <if test="classesId != null">
+                and classes_id = #{classesId,jdbcType=INTEGER}
+            </if>
+            <if test="remarks != null">
+                and remarks = #{remarks,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </delete>
+
+    <!--通过主键列表删除，列表长度不能为0-->
+    <delete id="deleteByIds" parameterType="list">
+        delete from question_naire.naire_type where id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="countAll" resultType="int">
+        select count(id) from question_naire.naire_type
+    </select>
+
+    <select id="countByEntity" parameterType="com.nclg.entity.NaireType" resultType="int">
+        select count(id) from question_naire.naire_type
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="naireId != null">
+                and naire_id = #{naireId,jdbcType=INTEGER}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="departmentId != null">
+                and department_id = #{departmentId,jdbcType=INTEGER}
+            </if>
+            <if test="subjectId != null">
+                and subject_id = #{subjectId,jdbcType=INTEGER}
+            </if>
+            <if test="classesId != null">
+                and classes_id = #{classesId,jdbcType=INTEGER}
+            </if>
+            <if test="remarks != null">
+                and remarks = #{remarks,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+</mapper>

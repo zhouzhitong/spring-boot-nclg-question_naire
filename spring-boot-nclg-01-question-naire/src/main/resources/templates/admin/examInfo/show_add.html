@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title th:text="${examInfoVo!=null}?'试题修改界面':'试题添加界面'" >examInfoVo</title>
+    <link href="/asserts/css/bootstrap.min.css" th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet" />
+    <link href="/asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="commons/bar::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="commons/bar::sidebar(activeUri='DynamicZone')"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <h2 th:if="${#strings.isEmpty(examInfoVo)}" th:text="试题添加内容"></h2>
+            <h2 th:if="${not #strings.isEmpty(examInfoVo)}" th:text="试题修改内容"></h2>
+            <form th:action="@{/admin/examInfo/edit}" th:method="POST">
+                <fieldset th:disabled="${info!=null}?disabled:null">
+                    <div>
+                        <!-- 隐藏属性 -->
+                        <div>
+                            <input sec:authorize="hasRole('UPDATE')" type="hidden" name="_method" value="put" th:if="${examInfoVo!=null}"/>
+                            <input type="hidden" name="id" th:value="${examInfoVo.id}" th:if="${examInfoVo!=null}"/>
+                        </div>
+                        <!-- 题目内容 -->
+                        <div class="form-group">
+                            <label>题目内容</label>
+                            <input name="content" type="text" th:value="${examInfoVo!=null}?${examInfoVo.content}" class="form-control" maxlength="50" placeholder="（必填）例如：莅临芜湖信息科技学校指导工作"/>
+                        </div>
+                        <!-- 题目类型 -->
+                        <!--<div id="exam_type" class="form-group">
+                            <label>题目类型</label>
+                            &lt;!&ndash;  id="disabledSelect" disabled &ndash;&gt;
+                            <select name="type" class="form-control" th:value="${examInfoVo!=null}?${examInfoVo.type}" >
+                                <option th:value="单选题" th:selected="${examInfoVo.type=='单选题'}?'selected'">1、单选题</option>
+                                <option th:value="多选题" th:selected="${examInfoVo.type=='多选题'}?'selected'">2、多选题</option>
+                                <option th:value="简答题" th:selected="${examInfoVo.type=='简答题'}?'selected'">3、简答题</option>
+                                <option th:value="判断题" th:selected="${examInfoVo.type=='判断题'}?'selected'">4、判断题</option>
+                            </select>
+                        </div>-->
+                        <div id="exam_type" class="form-group">
+                            <label>题目类型</label>
+                            <!-- id="disabledSelect" disabled -->
+                            <input name="type" th:value="${examInfoVo!=null}?${examInfoVo.type}" th:readonly="${examInfoVo!=null}?true" class="form-control" maxlength="10"/>
+                        </div>
+                        <!-- 备注信息 -->
+                        <div class="form-group">
+                            <label>备注信息</label>
+                            <input name="remarks" type="text" th:value="${examInfoVo!=null}?${examInfoVo.remarks}" class="form-control" maxlength="50" placeholder="（选填）"/>
+                        </div>
+                    </div>
+                    <div th:each="examAnswer:${examInfoVo.examAnswers}">
+                        <!-- 隱藏屬性 -->
+                        <div>
+                            <input hidden name="examAnswer.id" type="text" th:value="${examInfoVo!=null}?${examAnswer.id}"/>
+                        </div>
+                        <!-- 答案序号 -->
+                        <div class="form-group" disabled>
+                            <label>答案序号</label>
+                            <input name="examAnswer.answerId" type="text" th:value="${examInfoVo!=null}?${examAnswer.answerId}" th:readonly="${examInfoVo!=null}?true" class="form-control" maxlength="1" placeholder="（必填）例如：A "/>
+                        </div>
+                        <!-- 答案内容 -->
+                        <div class="form-group">
+                            <label>答案内容</label>
+                            <input name="examAnswer.content" type="text" th:value="${examInfoVo!=null}?${examAnswer.content}" class="form-control" maxlength="50" placeholder="（必填）例如：A "/>
+                        </div>
+                        <!-- 备注信息 -->
+                        <div class="form-group" >
+                            <label>备注信息</label>
+                            <input name="examAnswer.remarks" type="text" th:value="${examInfoVo!=null}?${examAnswer.remarks}" class="form-control" maxlength="50" placeholder="（选填） "/>
+                        </div>
+                    </div>
+                    <!-- 判断是否是查看详情 -->
+                    <div th:if="${info==null}" >
+                        <button type="submit" class="btn btn-primary" th:text="${examInfoVo!=null}?'修改':'添加'"></button>
+                    </div>
+                </fieldset>
+            </form>
+
+            <!-- 查看详情时显示 -->
+            <div th:if="${info!=null}" >
+                <a class="btn btn-sm btn-primary" sec:authorize="hasRole('UPDATE')" th:href="@{/admin/examInfo/edit/}+${examInfoVo.id}" th:text="开始编辑">开始编辑</a>
+            </div>
+
+        </main>
+    </div>
+</div>
+</body>
+</html>

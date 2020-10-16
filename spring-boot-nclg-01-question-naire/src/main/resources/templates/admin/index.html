@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>管理界面</title>
+    <link href="/asserts/css/bootstrap.min.css" th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="/asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="commons/bar::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- 公共侧边栏 -->
+        <div th:replace="commons/bar::sidebar(activeUri='main.html')"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="chartjs-size-monitor"
+                 style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <!-- 未认证 -->
+                <div sec:authorize="!isAuthenticated()">
+                    <h2 align="center" style="text-align: center">未登录，<a th:href="@{/admin/login}">请登录</a></h2>
+                </div>
+                <!-- 认证成功的显示页面 -->
+                <div sec:authorize="isAuthenticated()">
+                    <h1 class="text-center">登录成功，<span sec:authentication="name"></span></h1>
+                    <form class="nav-link" th:action="@{/logout}" method="post">
+                        <input type="submit" value="注销"/>
+                    </form>
+                    <h2 align="center"><span sec:authentication="name"></span>,您好，有的角色有：<span
+                            sec:authentication="principal.authorities"></span></h2>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>

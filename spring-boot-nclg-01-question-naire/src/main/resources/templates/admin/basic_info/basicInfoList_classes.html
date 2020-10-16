@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>问卷信息管理</title>
+    <link href="/asserts/css/bootstrap.min.css" th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="/asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+    <script type="text/javascript" src="/asserts/js/jquery-3.2.1.slim.min.js"
+            th:src="@{/asserts/js/jquery-3.2.1.slim.min.js}"></script>
+</head>
+<body>
+<div th:replace="commons/bar::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- 公共侧边栏 -->
+        <div th:replace="commons/bar::sidebar(activeUri='basicInfo')"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div>
+                <!-- 未认证 -->
+                <div sec:authorize="!isAuthenticated()">
+                    <h2 class="text-center h-25">未登录，<a th:href="@{/admin/login}">请登录</a></h2>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <h2>问卷调查题目基本信息</h2>
+                    <div sec:authorize="hasRole('INSERT')">
+                        <button disabled class="btn btn-sm btn-success" href="#"
+                           th:text="添加班级信息" th:href="@{/admin/paper/paper_add}"></button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm text-center">
+                            <thead>
+                                <tr>
+                                    <th><span class="text-center">编号[ID]</span></th>
+                                    <th><span class="text-center">班级名称</span></th>
+                                    <th><span class="text-center">操作</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="class:${classes}">
+                                    <td>
+                                        <span th:text="${class.id}">编号[ID]</span>
+                                    </td>
+                                    <td>
+                                        <span th:text="${class.classesName}">院系名称</span>
+                                    </td>
+                                    <td>
+                                        <!--<a href="#" th:href="@{/admin/basicInfo/classes/}+${class.id}">
+                                            <span class="btn btn-sm btn-info" th:text="详情">详情</span>
+                                        </a>-->
+                                        <button disabled sec:authorize="hasRole('DELETE')"
+                                                th:attr="del_uri=@{/admin/examInfo/edit/}+${class.id}"
+                                                class="btn btn-sm btn-danger deleteBtn" th:text="删除">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- 删除信息 -->
+                        <div>
+                            <form id="deleteEmpForm" th:method="POST">
+                                <input hidden name="_method" value="delete"/>
+                            </form>
+                        </div>
+                        <script>
+                            $(".deleteBtn").click(function () {
+                                //删除当前员工的
+                                $("#deleteEmpForm").attr("action", $(this).attr("del_uri")).submit();
+                                return false;
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>

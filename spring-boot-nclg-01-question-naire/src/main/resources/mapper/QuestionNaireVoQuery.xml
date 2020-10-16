@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nclg.query.QuestionNaireVoQuery">
+
+    <!--<resultMap id="questionNaireVo" type="com.nclg.vo.QuestionNaireVo">
+        <id column="id" property="id"/>
+        <result column="naire_name" property="naireName"/>
+        <result column="naire_date" property="naireDate"/>
+        <result column="naire_remarks" property="naireRemarks"/>
+        <result column="type" property="type"/>
+        <result column="type" property="naireType.type"/>
+    </resultMap>-->
+
+    <resultMap id="naireExamVo" type="com.nclg.vo.NaireExamVo">
+        <id column="id" property="id"/>
+        <result column="exam_id" property="examId"/>
+        <result column="content" property="content"/>
+        <result column="type" property="type"/>
+        <result column="remarks" property="remarks"/>
+    </resultMap>
+
+    <select id="findOneByIdToGetAllInfo" resultType="com.nclg.vo.NaireExamVo">
+        SELECT questionNaire.id,exam_id,content,questionNaire.type,exam_info.remarks
+        from questionNaire,naireExam,exam_info
+        WHERE questionNaire.id = naireExam.naire_id
+            and naireExam.exam_id = exam_info.id
+            and questionNaire.id= #{id};
+    </select>
+
+</mapper>

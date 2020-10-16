@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nclg.query.ExamInfoVoQuery">
+
+    <!-- 定义一个结果集 -->
+    <resultMap id="examInfoVo" type="com.nclg.vo.ExamInfoVo">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="type" column="type"/>
+        <result property="remarks" column="remarks"/>
+        <collection property="examAnswers" ofType="com.nclg.entity.ExamAnswer">
+            <id property="id" column="a_id"/>
+            <result property="examId" column="exam_id"/>
+            <result property="answerId" column="answer_id"/>
+            <result property="content" column="a_content"/>
+            <result property="remarks" column="a_remarks"/>
+        </collection>
+    </resultMap>
+
+    <select id="getOneById" resultMap="examInfoVo">
+        SELECT i.id,i.content,i.type,i.remarks
+            ,a.id a_id,a.answer_id,a.exam_id,a.content a_content,a.remarks a_remarks
+        FROM exam_info i left outer JOIN exam_answer a
+        ON i.id = a.exam_id
+        WHERE i.id = #{id} ORDER BY a.answer_id ;
+    </select>
+
+    <select id="getAllExamInfoVo" resultMap="examInfoVo">
+        SELECT i.id,i.content,i.type,i.remarks
+            ,a.id a_id,a.answer_id,a.exam_id,a.content a_content,a.remarks a_remarks
+        FROM exam_info i left outer JOIN exam_answer a
+        ON i.id = a.exam_id ORDER BY a.answer_id ;
+    </select>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nclg.query.NaireTypeVoQuery">
+
+
+    <select id="findOneByNaireId" resultType="com.nclg.vo.NaireTypeVo">
+        SELECT naire_type.id,naire_type.naire_id,naire_type.type
+            ,department_name,subject_name,classes_name
+        FROM naire_type,subject,classes,department
+        where naire_type.department_id = department.id
+            and naire_type.department_id = subject.id
+            and naire_type.department_id = classes.id
+            and naire_id= #{id}
+    </select>
+
+</mapper>

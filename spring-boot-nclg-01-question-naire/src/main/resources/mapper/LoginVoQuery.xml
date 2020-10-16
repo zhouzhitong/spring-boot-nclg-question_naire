@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nclg.query.LoginVoQuery">
+    <!--<cache size="1024" flushInterval="60000"/>-->
+
+    <!-- 定义一个结果集 -->
+    <resultMap id="loginUserVo" type="com.nclg.vo.LoginVo">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="remarks" column="remarks"/>
+        <collection property="loginRoles" ofType="com.nclg.entity.LoginRole">
+            <id property="id" column="lr_id"/>
+            <result property="userId" column="user_id"/>
+            <result property="role" column="role"/>
+            <result property="remarks" column="role_remarks"/>
+        </collection>
+    </resultMap>
+
+    <select id="findOneByUsername" resultMap="loginUserVo">
+        SELECT l.id,l.username,l.password,l.remarks,l.remarks,
+            lr.id lr_id,lr.user_id,lr.role,lr.remarks role_remarks
+        FROM login l LEFT OUTER JOIN login_role lr
+				on l.id=lr.user_id
+        WHERE  l.username= #{username}
+    </select>
+
+
+</mapper>

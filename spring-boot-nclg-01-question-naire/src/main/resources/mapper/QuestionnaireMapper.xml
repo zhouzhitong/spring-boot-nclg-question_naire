@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nclg.mapper.QuestionnaireMapper">
+
+    <resultMap type="com.nclg.entity.Questionnaire" id="QuestionnaireResultMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="naireName" column="naire_name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="naireDate" column="naire_date" jdbcType="TIMESTAMP"/>
+        <result property="naireRemarks" column="naire_remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="table_field">
+      id, naire_name, type, naire_date, naire_remarks      
+    </sql>
+
+    <!--通过Id查询单个-->
+    <select id="getById" resultMap="QuestionnaireResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="table_field"/>
+        from question_naire.questionNaire
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+
+    <!--通过实体不为空的属性作为筛选条件查询列表-->
+    <select id="listByEntity" resultMap="QuestionnaireResultMap" parameterType="com.nclg.entity.Questionnaire">
+        select
+        <include refid="table_field"/>
+        from question_naire.questionNaire
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="naireName != null">
+                and naire_name = #{naireName,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="naireDate != null">
+                and naire_date = #{naireDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="naireRemarks != null">
+                and naire_remarks = #{naireRemarks,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!--通过实体不为空的属性作为筛选条件查询单个-->
+    <select id="getByEntity" resultMap="QuestionnaireResultMap" parameterType="com.nclg.entity.Questionnaire">
+        select
+        <include refid="table_field"/>
+        from question_naire.questionNaire
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="naireName != null">
+                and naire_name = #{naireName,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="naireDate != null">
+                and naire_date = #{naireDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="naireRemarks != null">
+                and naire_remarks = #{naireRemarks,jdbcType=VARCHAR}
+            </if>
+            limit 0,1
+        </where>
+    </select>
+
+    <!--通过实体不为空的属性作为or like筛选条件查询列表-->
+    <select id="listByEntityLike" resultMap="QuestionnaireResultMap" parameterType="com.nclg.entity.Questionnaire">
+        select
+        <include refid="table_field"/>
+        from question_naire.questionNaire
+        <where>
+            <if test="id != null">
+                or id like #{id,jdbcType=INTEGER}
+            </if>
+            <if test="naireName != null">
+                or naire_name like #{naireName,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                or type like #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="naireDate != null">
+                or naire_date like #{naireDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="naireRemarks != null">
+                or naire_remarks like #{naireRemarks,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!--通过Id列表作为筛选条件查询列表，列表长度不为0-->
+    <select id="listByIds" resultMap="QuestionnaireResultMap" parameterType="list">
+        select
+        <include refid="table_field"/>
+        from question_naire.questionNaire
+        where id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--新增实体属性不为null的列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="com.nclg.entity.Questionnaire">
+        insert into question_naire.questionNaire
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="naireName != null">
+                naire_name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="naireDate != null">
+                naire_date,
+            </if>
+            <if test="naireRemarks != null">
+                naire_remarks,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="naireName != null">
+                #{naireName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="naireDate != null">
+                #{naireDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="naireRemarks != null">
+                #{naireRemarks,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--批量新增所有列，列表长度不能为0，且列表id统一为null或者统一不为null-->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true" parameterType="list">
+        insert into question_naire.questionNaire
+        (<if test="id != null">id,</if>naire_name, type, naire_date, naire_remarks)
+        values
+        <foreach item="item" collection="list" separator="," open="" close="" index="index">
+            (<if test="id != null">#{id,jdbcType=INTEGER},</if>#{naireName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+            #{naireDate,jdbcType=TIMESTAMP}, #{naireRemarks,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <!--通过主键修改实体属性不为null的列-->
+    <update id="update" parameterType="com.nclg.entity.Questionnaire">
+        update question_naire.questionNaire
+        <set>
+            <if test="naireName != null and naireName != ''">
+                naire_name = #{naireName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="naireDate != null">
+                naire_date = #{naireDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="naireRemarks != null and naireRemarks != ''">
+                naire_remarks = #{naireRemarks,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--通过主键修改实体列表，列表长度不能为0，注意：当实体属性为null时，对应的列也会别更新为null-->
+    <update id="updateBatch" parameterType="list">
+        update question_naire.questionNaire
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="naire_name = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when id = #{item.id} then #{item.naireName}
+                </foreach>
+            </trim>
+            <trim prefix="type = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when id = #{item.id} then #{item.type}
+                </foreach>
+            </trim>
+            <trim prefix="naire_date = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when id = #{item.id} then #{item.naireDate}
+                </foreach>
+            </trim>
+            <trim prefix="naire_remarks = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when id = #{item.id} then #{item.naireRemarks}
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from question_naire.questionNaire where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <!--通过实体非空属性删除-->
+    <delete id="deleteByEntity" parameterType="com.nclg.entity.Questionnaire">
+        delete from question_naire.questionNaire
+        <where>
+            <if test="naireName != null">
+                and naire_name = #{naireName,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="naireDate != null">
+                and naire_date = #{naireDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="naireRemarks != null">
+                and naire_remarks = #{naireRemarks,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </delete>
+
+    <!--通过主键列表删除，列表长度不能为0-->
+    <delete id="deleteByIds" parameterType="list">
+        delete from question_naire.questionNaire where id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="countAll" resultType="int">
+        select count(id) from question_naire.questionNaire
+    </select>
+
+    <select id="countByEntity" parameterType="com.nclg.entity.Questionnaire" resultType="int">
+        select count(id) from question_naire.questionNaire
+        <where>
+            <if test="id != null">
+                and id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="naireName != null">
+                and naire_name = #{naireName,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="naireDate != null">
+                and naire_date = #{naireDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="naireRemarks != null">
+                and naire_remarks = #{naireRemarks,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+</mapper>

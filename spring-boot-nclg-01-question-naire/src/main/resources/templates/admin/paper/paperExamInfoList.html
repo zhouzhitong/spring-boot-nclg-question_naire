@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+    问卷调查题目基本信息：
+
+    编号[ID]	题目编号	问卷名称	问卷类型	备注信息	操作
+-->
+
+<html lang="zh"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>问卷信息管理</title>
+    <link href="/asserts/css/bootstrap.min.css" th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="/asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+    <script type="text/javascript" src="/asserts/js/jquery-3.2.1.slim.min.js"
+            th:src="@{/asserts/js/jquery-3.2.1.slim.min.js}"></script>
+</head>
+<body>
+<div th:replace="commons/bar::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- 公共侧边栏 -->
+        <div th:replace="commons/bar::sidebar(activeUri='examList')"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div>
+                <!-- 未认证 -->
+                <div sec:authorize="!isAuthenticated()">
+                    <h2 class="text-center h-25">未登录，<a th:href="@{/admin/login}">请登录</a></h2>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <h2>问卷调查题目基本信息</h2>
+                    <div class="row">
+                        <fieldset disabled="disabled">
+                            <!-- 隐藏属性 -->
+                            <div>
+
+                                <input type="hidden" name="id" th:value="${questionnaire.id}"
+                                       th:if="${questionnaire!=null}"/>
+                            </div>
+                            <!-- 题目编号 -->
+                            <div class="form-group">
+                                <label>问卷类型：
+                                    <a href="#"><span>查看详情</span></a>
+                                </label>
+                                <input name="examId" type="text" th:value="${questionnaire!=null}?${questionnaire.type}"
+                                       maxlength="20" class="form-control"/>
+                            </div>
+
+                        </fieldset>
+                    </div>
+
+                    <div sec:authorize="hasRole('INSERT')">
+                        <div sec:authorize="hasRole('INSERT')">
+                            <a class="btn btn-sm btn-success"  href="#"
+                               th:text="Excel导入数据" th:href="@{/admin/paper/excel_import/}+${questionnaire.id}"></a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm text-center">
+                            <thead>
+                            <tr>
+                                <th><span class="text-center">编号[ID]</span></th>
+                                <th><span class="text-center">题目编号</span></th>
+                                <th><span class="text-center">问卷名称</span></th>
+                                <th><span class="text-center">问卷类型</span></th>
+                                <th><span class="text-center">备注信息</span></th>
+                                <th><span class="text-center">操作</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="naireExamVo:${naireExamVos}">
+                                <td><span class="text-center" th:text="${naireExamVo.id}">1</span></td>
+                                <td><span class="text-center" th:text="${naireExamVo.examId}">1</span></td>
+                                <td><span class="text-center" th:text="${naireExamVo.content}">1</span></td>
+                                <td><span class="text-center" th:text="${naireExamVo.type}">1</span></td>
+                                <td><span class="text-center" th:text="${naireExamVo.remarks}">1</span></td>
+                                <td>
+                                    <a disabled class="btn btn-sm btn-info" href="#" th:text="详情"
+                                       th:href="@{/admin/examInfo/info/}+${naireExamVo.id}">详情</a>
+                                    <a class="btn btn-sm btn-primary" sec:authorize="hasRole('UPDATE')" th:text="编辑"
+                                       th:href="@{/admin/examInfo/edit/}+${naireExamVo.id}">编辑</a>
+                                    <button disabled sec:authorize="hasRole('DELETE')"
+                                            class="btn btn-sm btn-danger deleteBtn" th:text="删除">删除
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!--<tr th:each="examInfo:${examInfos}">
+                                <td th:text="${examInfo.id}">编号</td>
+                                <td th:text="${examInfo.examId}">题目编号</td>
+                                <td th:text="${examInfo.content}">题目内容</td>
+                                <td th:text="${examInfo.type}">题目类型</td>
+                                <td th:text="${examInfo.remarks}">备注信息</td>
+                                <td>
+                                    <a disabled class="btn btn-sm btn-info" href="#" th:text="详情" th:href="@{/admin/examInfo/info/}+${examInfo.id}">详情</a>
+                                    <a disabled class="btn btn-sm btn-primary" sec:authorize="hasRole('UPDATE')" th:href="@{/admin/examInfo/edit/}+${examInfo.id}" th:text="编辑">编辑</a>
+                                    <button disabled sec:authorize="hasRole('DELETE')" th:attr="del_uri=@{/admin/examInfo/edit/}+${examInfo.id}" class="btn btn-sm btn-danger deleteBtn" th:text="删除">删除</button>
+                                </td>
+                            </tr>-->
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>
