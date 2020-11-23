@@ -47,6 +47,16 @@ public class ExamInfoServiceImpl implements ExamInfoService {
         }
     }
 
+    @Override
+    public int deleteExamInfo(Long examId) {
+        ExamInfo examInfo = examInfoMapper.getById(examId);
+        ExamAnswer examAnswer = new ExamAnswer();
+        examAnswer.setExamId(examInfo.getId());
+        examAnswerMapper.deleteByEntity(examAnswer);
+
+        return examInfoMapper.deleteById(examId);
+    }
+
     @Resource
     private QuestionnaireMapper questionnaireMapper;
     @Resource

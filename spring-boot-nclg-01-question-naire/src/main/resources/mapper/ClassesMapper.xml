@@ -205,6 +205,18 @@
         </where>
     </delete>
 
+    <delete id="deleteBySubjectId" parameterType="java.lang.Integer">
+        delete from question_naire.classes where subject_id =#{subjectId}
+    </delete>
+
+    <delete id="deleteBySubjectIds" parameterType="list">
+        delete from question_naire.classes where subject_id =
+        in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </delete>
+
     <!--通过主键列表删除，列表长度不能为0-->
     <delete id="deleteByIds" parameterType="list">
         delete from question_naire.classes where id in

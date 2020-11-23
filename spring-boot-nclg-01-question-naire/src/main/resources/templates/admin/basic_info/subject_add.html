@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title th:text="院系添加界面">examInfoVo</title>
+    <link href="/asserts/css/bootstrap.min.css" th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="/asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="commons/bar::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+
+        <div th:replace="commons/bar::sidebar(activeUri='basicInfo')"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <h2 th:text="班级添加"></h2>
+            <!--            <h2 th:if="${not #strings.isEmpty(examInfoVo)}" th:text="试题修改内容"></h2>-->
+            <form th:action="@{/admin/basicInfo/addSubject/}+${department.id}" th:method="POST">
+                <div>
+                    <!-- 题目内容 -->
+                    <div class="form-group">
+                        <label>院系名称：<span th:text="${department.departmentName}" class="text-info" /></label>
+                        <!--<input hidden="hidden" name="departmentId" type="text" class="form-control" maxlength="20"
+                               placeholder="（必填）例如：计算机信息与工程学院"/>-->
+                    </div>
+
+                    <!-- 题目内容 -->
+                    <div class="form-group">
+                        <label>院系名称</label>
+                        <input name="subjectName" type="text" class="form-control" maxlength="20"
+                               placeholder="（必填）例如：软件工程"/>
+                    </div>
+
+                </div>
+                <!-- 判断是否是查看详情 -->
+                <button type="submit" class="btn btn-primary" th:text="添加"></button>
+            </form>
+        </main>
+
+    </div>
+</div>
+</body>
+</html>

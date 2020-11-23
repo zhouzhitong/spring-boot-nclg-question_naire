@@ -47,10 +47,10 @@
                             <input name="type" th:value="${examInfoVo!=null}?${examInfoVo.type}" th:readonly="${examInfoVo!=null}?true" class="form-control" maxlength="10"/>
                         </div>
                         <!-- 备注信息 -->
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <label>备注信息</label>
                             <input name="remarks" type="text" th:value="${examInfoVo!=null}?${examInfoVo.remarks}" class="form-control" maxlength="50" placeholder="（选填）"/>
-                        </div>
+                        </div>-->
                     </div>
                     <div th:each="examAnswer:${examInfoVo.examAnswers}">
                         <!-- 隱藏屬性 -->
@@ -68,10 +68,10 @@
                             <input name="examAnswer.content" type="text" th:value="${examInfoVo!=null}?${examAnswer.content}" class="form-control" maxlength="50" placeholder="（必填）例如：A "/>
                         </div>
                         <!-- 备注信息 -->
-                        <div class="form-group" >
+                        <!--<div class="form-group" >
                             <label>备注信息</label>
                             <input name="examAnswer.remarks" type="text" th:value="${examInfoVo!=null}?${examAnswer.remarks}" class="form-control" maxlength="50" placeholder="（选填） "/>
-                        </div>
+                        </div>-->
                     </div>
                     <!-- 判断是否是查看详情 -->
                     <div th:if="${info==null}" >

@@ -27,4 +27,10 @@ public class Subject {
      */
     private String remarks;
 
+    public Subject(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public Subject() {
+    }
 }

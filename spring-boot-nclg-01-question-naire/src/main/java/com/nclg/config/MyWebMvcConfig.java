@@ -19,13 +19,19 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/admin/").setViewName("admin/index");
-        registry.addViewController("/admin/index").setViewName("admin/index");
-        registry.addViewController("/admin/main.html").setViewName("admin/index");
-
-        registry.addViewController("/admin/login").setViewName("admin/login");
-
-        registry.addViewController("/admin/paper/paper_add").setViewName("admin/paper/paper_add");
+        // 首页
+        registry.addViewController("/admin/")
+                .setViewName("admin/index");
+        registry.addViewController("/admin/index")
+                .setViewName("admin/index");
+        registry.addViewController("/admin/main.html")
+                .setViewName("admin/index");
+        // 登录
+        registry.addViewController("/admin/login")
+                .setViewName("admin/login");
+        //
+        registry.addViewController("/admin/paper/paper_add")
+                .setViewName("admin/paper/paper_add");
     }
 
     /**

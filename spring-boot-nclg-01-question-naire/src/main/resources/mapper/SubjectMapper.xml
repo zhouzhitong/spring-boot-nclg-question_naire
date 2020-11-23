@@ -21,6 +21,15 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
+    <select id="getByDepartId" resultMap="SubjectResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="table_field"/>
+        from
+        question_naire.subject
+        where
+        department_id= #{departmentId,jdbcType=INTEGER}
+    </select>
+
 
     <!--通过实体不为空的属性作为筛选条件查询列表-->
     <select id="listByEntity" resultMap="SubjectResultMap" parameterType="com.nclg.entity.Subject">
@@ -187,6 +196,10 @@
     <!--通过主键删除-->
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from question_naire.subject where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByDepartId" parameterType="java.lang.Integer">
+        delete from question_naire.subject where department_id = #{id,jdbcType=INTEGER}
     </delete>
 
     <!--通过实体非空属性删除-->

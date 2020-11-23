@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 描述：<br>
+ * 描述：<br>表现层: 问卷中的 问题管理
  * </>
  *
  * @author 周志通
@@ -62,11 +62,11 @@ public class ExamInfoController {
     private ExamInfoService examInfoService;
 
     /**
-     * 处理编辑的请求
+     * 编辑问题
      *
-     * @param examInfo
-     * @param request
-     * @param model
+     * @param examInfo 问卷信息
+     * @param request 存储 问题相关信息
+     * @param model 响应消息
      * @return 重定向至列表页面
      */
     @PutMapping("/edit")

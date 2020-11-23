@@ -7,7 +7,6 @@ import com.nclg.query.QuestionNaireVoQuery;
 import com.nclg.service.ExamInfoService;
 import com.nclg.vo.NaireExamVo;
 import com.nclg.vo.NaireTypeVo;
-import com.nclg.vo.QuestionNaireVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 描述：<br>
+ * 描述：<br> 操作 问卷信息...
  * </>
  *
  * @author 周志通
@@ -33,6 +32,11 @@ public class QuestionNaireController {
     @Resource
     private QuestionnaireMapper questionnaireMapper;
 
+    /**
+     * 所有问卷信息
+     * @param model 所有问卷信息
+     * @return admin/paper/paperList.html
+     */
     @GetMapping(value = "paperList")
     public String jumpPaperList(Model model) {
         List<Questionnaire> questionnaires = questionnaireMapper.listByEntity(null);
@@ -87,7 +91,8 @@ public class QuestionNaireController {
     @PostMapping(value = "excel_import")
     public String importExcel(@RequestParam("type") String type, Long paperId
             , @RequestParam("excel_file") MultipartFile excelFile) throws IOException {
-        examInfoService.excelImportService(type, paperId, excelFile.getInputStream(), excelFile.getOriginalFilename());
+        examInfoService.excelImportService(type, paperId
+                , excelFile.getInputStream(), excelFile.getOriginalFilename());
         return "redirect:/admin/paper/info/" + paperId;
     }
 

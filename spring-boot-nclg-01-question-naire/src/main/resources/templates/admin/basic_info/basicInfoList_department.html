@@ -27,7 +27,7 @@
                     <h2>问卷调查题目基本信息</h2>
                     <div sec:authorize="hasRole('INSERT')">
                         <a class="btn btn-sm btn-success" href="#"
-                           th:text="增加院系" th:href="@{/admin/paper/paper_add}"></a>
+                           th:text="增加院系" th:href="@{/admin/basicInfo/addDepart}"></a>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-sm text-center">
@@ -50,8 +50,8 @@
                                         <a href="#" th:href="@{/admin/basicInfo/subject/}+${department.id}">
                                             <span class="btn btn-sm btn-info" th:text="详情">详情</span>
                                         </a>
-                                        <button disabled sec:authorize="hasRole('DELETE')"
-                                                th:attr="del_uri=@{/admin/basicInfo/subject/}+${department.id}"
+                                        <button sec:authorize="hasRole('DELETE')"
+                                                th:attr="del_uri=@{/admin/basicInfo/editDepart/}+${department.id}"
                                                 class="btn btn-sm btn-danger deleteBtn" th:text="删除">删除
                                         </button>
                                     </td>

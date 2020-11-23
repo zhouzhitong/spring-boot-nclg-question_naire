@@ -103,6 +103,10 @@ public interface ClassesMapper {
      */
     int deleteByEntity(Classes classes);
 
+    int deleteBySubjectId(Integer subjectId);
+
+    int deleteBySubjectIds(List<Integer> subjectId);
+
     /**
      * 通过主键列表删除，列表长度不能为0
      *

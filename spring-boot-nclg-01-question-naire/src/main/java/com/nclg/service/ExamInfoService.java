@@ -27,6 +27,8 @@ public interface ExamInfoService {
     int updateExamInfoAndAnswer(ExamInfo examInfo, List<ExamAnswer> examAnswers) throws Exception;
 
 
+    int deleteExamInfo(Long examId);
+
     /**
      * 试题文件导入
      *

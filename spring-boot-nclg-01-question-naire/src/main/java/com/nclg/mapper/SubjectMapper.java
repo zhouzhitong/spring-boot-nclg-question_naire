@@ -22,6 +22,9 @@ public interface SubjectMapper {
      */
     Subject getById(Integer id);
 
+
+    List<Subject> getByDepartId(Integer departmentId);
+
     /**
      * 通过实体不为空的属性作为筛选条件查询列表
      *
@@ -94,6 +97,8 @@ public interface SubjectMapper {
      * @return 影响行数
      */
     int deleteById(Integer id);
+
+    int deleteByDepartId(Integer id);
 
     /**
      * 通过实体非空属性批量删除

@@ -27,7 +27,7 @@
                     <h2>问卷调查题目基本信息</h2>
                     <div sec:authorize="hasRole('INSERT')">
                         <a class="btn btn-sm btn-success" href="#"
-                           th:text="添加问卷" th:href="@{/admin/paper/paper_add}"></a>
+                           th:text="添加专业" th:href="@{/admin/basicInfo/addSubject/}+${id}"></a>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-sm text-center">
@@ -50,8 +50,8 @@
                                         <a href="#" th:href="@{/admin/basicInfo/classes/}+${subject.id}">
                                             <span class="btn btn-sm btn-info" th:text="详情">详情</span>
                                         </a>
-                                        <button disabled sec:authorize="hasRole('DELETE')"
-                                                th:attr="del_uri=@{/admin/examInfo/edit/}+${subject.id}"
+                                        <button sec:authorize="hasRole('DELETE')"
+                                                th:attr="del_uri=@{/admin/basicInfo/editSubject/}+${subject.id}"
                                                 class="btn btn-sm btn-danger deleteBtn" th:text="删除">删除
                                         </button>
                                     </td>
@@ -62,11 +62,11 @@
                         <div>
                             <form id="deleteEmpForm" th:method="POST">
                                 <input hidden name="_method" value="delete"/>
+                                <input hidden name="departmentId" th:value="${id}"/>
                             </form>
                         </div>
                         <script>
                             $(".deleteBtn").click(function () {
-                                //删除当前员工的
                                 $("#deleteEmpForm").attr("action", $(this).attr("del_uri")).submit();
                                 return false;
                             });
