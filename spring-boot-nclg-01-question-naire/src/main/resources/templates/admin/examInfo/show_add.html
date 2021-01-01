@@ -28,7 +28,8 @@
                         <!-- 题目内容 -->
                         <div class="form-group">
                             <label>题目内容</label>
-                            <input name="content" type="text" th:value="${examInfoVo!=null}?${examInfoVo.content}" class="form-control" maxlength="50" placeholder="（必填）例如：莅临芜湖信息科技学校指导工作"/>
+                            <input name="content" type="text" th:value="${examInfoVo!=null}?${examInfoVo.content}"
+                                   class="form-control" maxlength="50" placeholder="（必填）例如：莅临芜湖信息科技学校指导工作"/>
                         </div>
                         <!-- 题目类型 -->
                         <!--<div id="exam_type" class="form-group">
@@ -42,9 +43,9 @@
                             </select>
                         </div>-->
                         <div id="exam_type" class="form-group">
-                            <label>题目类型</label>
+                            <label>题目类型：<span th:text="${examInfoVo!=null}?${examInfoVo.type}" class="text-info"></span></label>
                             <!-- id="disabledSelect" disabled -->
-                            <input name="type" th:value="${examInfoVo!=null}?${examInfoVo.type}" th:readonly="${examInfoVo!=null}?true" class="form-control" maxlength="10"/>
+<!--                            <input name="type" th:value="${examInfoVo!=null}?${examInfoVo.type}" th:readonly="${examInfoVo!=null}?true" class="form-control" maxlength="10"/>-->
                         </div>
                         <!-- 备注信息 -->
                         <!--<div class="form-group">
@@ -59,8 +60,8 @@
                         </div>
                         <!-- 答案序号 -->
                         <div class="form-group" disabled>
-                            <label>答案序号</label>
-                            <input name="examAnswer.answerId" type="text" th:value="${examInfoVo!=null}?${examAnswer.answerId}" th:readonly="${examInfoVo!=null}?true" class="form-control" maxlength="1" placeholder="（必填）例如：A "/>
+                            <label>答案序号：<span th:text="${examInfoVo!=null}?${examAnswer.answerId}" class="text-info"></span></label>
+<!--                            <input name="examAnswer.answerId" type="text" th:value="${examInfoVo!=null}?${examAnswer.answerId}" th:readonly="${examInfoVo!=null}?true" class="form-control" maxlength="1" placeholder="（必填）例如：A "/>-->
                         </div>
                         <!-- 答案内容 -->
                         <div class="form-group">

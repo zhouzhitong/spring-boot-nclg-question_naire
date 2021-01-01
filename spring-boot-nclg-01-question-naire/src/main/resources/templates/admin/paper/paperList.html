@@ -55,17 +55,16 @@
                                         th:text="${#dates.format(questionnaire.naireDate,'yyyy-MM-dd HH:mm')}">生成/修改日期</span>
                                 </td>
                                 <td>
-                                    <span th:text="${questionnaire.naireRemarks}">备注信息</span>
+                                    <span th:text="${questionnaire.naireRemarks}">题目数量</span>
                                 </td>
                                 <td>
-                                    <a class="btn btn-sm btn-success" href="#"
-                                       th:text="Excel导入数据"
+                                    <a class="btn btn-sm btn-success" th:text="Excel导入数据"
                                        th:href="@{/admin/paper/excel_import/}+${questionnaire.id}"></a>
                                     <a href="#" th:href="@{/admin/paper/info/}+${questionnaire.id}">
                                         <span class="btn btn-sm btn-info" th:text="详情">详情</span>
                                     </a>
-                                    <button disabled sec:authorize="hasRole('DELETE')"
-                                            th:attr="del_uri=@{/admin/examInfo/edit/}+${questionnaire.id}"
+                                    <button sec:authorize="hasRole('DELETE')"
+                                            th:attr="del_uri=@{/admin/paper/edit/}+${questionnaire.id}"
                                             class="btn btn-sm btn-danger deleteBtn" th:text="删除">删除
                                     </button>
                                 </td>

@@ -26,8 +26,21 @@ public interface ExamInfoService {
      */
     int updateExamInfoAndAnswer(ExamInfo examInfo, List<ExamAnswer> examAnswers) throws Exception;
 
-
+    /**
+     * 删除问题信息
+     *
+     * @param examId 题目 ID
+     * @return 成功返回 1
+     */
     int deleteExamInfo(Long examId);
+
+    /**
+     * 删除问卷信息
+     *
+     * @param id 问卷的ID
+     * @return 成功返回 1
+     */
+    int deleteQuestionNaire(Long id);
 
     /**
      * 试题文件导入

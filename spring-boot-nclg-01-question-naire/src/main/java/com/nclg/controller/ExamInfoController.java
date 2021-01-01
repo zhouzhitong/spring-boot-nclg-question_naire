@@ -11,10 +11,7 @@ import com.nclg.vo.ExamInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +22,8 @@ import java.util.List;
  * </>
  *
  * @author 周志通
- * @version 1.0.0
- * @date 2020/9/20 14:50
+ * @version 1.0.1
+ * @date 2020/11/23 23:50
  **/
 @Controller
 @RequestMapping(value = "/admin/examInfo")
@@ -34,6 +31,8 @@ public class ExamInfoController {
 
     @Resource
     private ExamInfoVoQuery examInfoVoQuery;
+    @Resource
+    private ExamInfoService examInfoService;
 
     @GetMapping("/info/{id}")
     public String getOneExamInfo(@PathVariable("id") Long id, Model model) {
@@ -58,15 +57,20 @@ public class ExamInfoController {
         return "admin/examInfo/show_add";
     }
 
-    @Resource
-    private ExamInfoService examInfoService;
+    @DeleteMapping(value = {"/edit/{paperId}/{examId}"})
+    public String deleteExamInfoVo(@PathVariable("examId") Long examId, @PathVariable("paperId") Long paperId) {
+        System.out.println(examId);
+        System.out.println(paperId);
+        examInfoService.deleteExamInfo(examId);
+        return "redirect:/admin/paper/info/" + paperId;
+    }
 
     /**
      * 编辑问题
      *
      * @param examInfo 问卷信息
-     * @param request 存储 问题相关信息
-     * @param model 响应消息
+     * @param request  存储 问题相关信息
+     * @param model    响应消息
      * @return 重定向至列表页面
      */
     @PutMapping("/edit")

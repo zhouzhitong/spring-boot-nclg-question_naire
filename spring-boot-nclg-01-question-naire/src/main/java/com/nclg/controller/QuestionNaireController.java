@@ -31,30 +31,10 @@ public class QuestionNaireController {
 
     @Resource
     private QuestionnaireMapper questionnaireMapper;
-
-    /**
-     * 所有问卷信息
-     * @param model 所有问卷信息
-     * @return admin/paper/paperList.html
-     */
-    @GetMapping(value = "paperList")
-    public String jumpPaperList(Model model) {
-        List<Questionnaire> questionnaires = questionnaireMapper.listByEntity(null);
-        model.addAttribute("questionnaires", questionnaires);
-        return "admin/paper/paperList";
-    }
-
-    @PostMapping(value = "/edit")
-    public String paperInsert(Questionnaire questionnaire) {
-        questionnaire.setNaireDate(new Date());
-        int insert = questionnaireMapper.insert(questionnaire);
-        System.out.println(insert);
-        return "redirect:/admin/paper/paperList";
-    }
-
+    @Resource
+    private ExamInfoService examInfoService;
     @Resource
     private QuestionNaireVoQuery questionNaireVoQuery;
-
     @Resource
     private NaireTypeVoQuery naireTypeVoQuery;
 
@@ -76,11 +56,40 @@ public class QuestionNaireController {
         return "admin/paper/paperExamInfoList";
     }
 
+    /**
+     * 所有问卷信息
+     *
+     * @param model 所有问卷信息
+     * @return admin/paper/paperList.html
+     */
+    @GetMapping(value = {"/paperList"})
+    public String jumpPaperList(Model model) {
+        List<Questionnaire> questionnaires = questionnaireMapper.listByEntity(null);
+        model.addAttribute("questionnaires", questionnaires);
+        return "admin/paper/paperList";
+    }
+
+    @PostMapping(value = {"/edit"})
+    public String doPaperInsert(Questionnaire questionnaire) {
+        questionnaire.setNaireDate(new Date());
+        questionnaireMapper.insert(questionnaire);
+        System.out.println(questionnaire);
+        return "redirect:/admin/paper/paperList";
+    }
+
+    @DeleteMapping(value = {"/edit/{id}"})
+    public String deletePaperInfo(@PathVariable("id") Long qnId){
+        examInfoService.deleteQuestionNaire(qnId);
+        return "redirect:/admin/paper/paperList";
+    }
+
+    @PostMapping(value = "/edit/{id}")
+    public String doPaperDelete(@PathVariable("id") Long paperId) {
+        examInfoService.deleteQuestionNaire(paperId);
+        return "redirect:/admin/paper/paperList";
+    }
 
 // Excel文件导入请求
-
-    @Resource
-    private ExamInfoService examInfoService;
 
     @GetMapping(value = "excel_import/{id}")
     public String importExcel(@PathVariable("id") Long id, Model model) {

@@ -50,11 +50,43 @@ public class ExamInfoServiceImpl implements ExamInfoService {
     @Override
     public int deleteExamInfo(Long examId) {
         ExamInfo examInfo = examInfoMapper.getById(examId);
-        ExamAnswer examAnswer = new ExamAnswer();
-        examAnswer.setExamId(examInfo.getId());
-        examAnswerMapper.deleteByEntity(examAnswer);
+        try {
+            // 删除答案
+            ExamAnswer examAnswer = new ExamAnswer();
+            examAnswer.setExamId(examInfo.getId());
+            examAnswerMapper.deleteByEntity(examAnswer);
 
+            // 删除问卷题目信息
+            Naireexam naireexam = new Naireexam();
+            naireexam.setExamId(examId);
+            naireexam = naireexamMapper.getByEntity(naireexam);
+            naireexamMapper.deleteByEntity(naireexam);
+
+            // 删除问卷信息
+            Long naireId = naireexam.getNaireId();
+            Questionnaire questionnaire = questionnaireMapper.getById(naireId);
+            String naireRemarks = questionnaire.getNaireRemarks();
+            int i = Integer.parseInt(naireRemarks) - 1;
+            questionnaire.setNaireRemarks(i + "");
+            questionnaireMapper.update(questionnaire);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // 删除问题信息
         return examInfoMapper.deleteById(examId);
+    }
+
+    @Override
+    public int deleteQuestionNaire(Long id) {
+        // 删除问卷题目信息
+        Naireexam naireId = new Naireexam();
+        naireId.setNaireId(id);
+        List<Naireexam> naireexams = naireexamMapper.listByEntity(naireId);
+        for (Naireexam naireexam : naireexams) {
+            deleteExamInfo(naireexam.getExamId());
+        }
+        return questionnaireMapper.deleteById(id);
     }
 
     @Resource
@@ -96,4 +128,5 @@ public class ExamInfoServiceImpl implements ExamInfoService {
             e.printStackTrace();
         }
     }
+
 }
