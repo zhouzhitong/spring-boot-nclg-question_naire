@@ -18,10 +18,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableWebSecurity
 @EnableTransactionManagement
-public class QuestionNaireApplication8001 {
+public class Application80 {
 
     public static void main(String[] args) {
-        SpringApplication.run(QuestionNaireApplication8001.class, args);
+        SpringApplication.run(Application80.class, args);
     }
 
 }

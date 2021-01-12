@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title th:text="问卷添加界面">examInfoVo</title>
+    <link href="/asserts/css/bootstrap.min.css" th:href="@{/asserts/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="/asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="commons/bar::topbar"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="commons/bar::sidebar(activeUri='DynamicZone')"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <h2 th:text="试题添加内容"></h2>
+            <!--            <h2 th:if="${not #strings.isEmpty(examInfoVo)}" th:text="试题修改内容"></h2>-->
+            <form th:action="@{/admin/paper/edit}" th:method="POST">
+                <div>
+                    <!-- 题目内容 -->
+                    <div class="form-group">
+                        <label>问卷名称</label>
+                        <input name="naireName" type="text"
+                               class="form-control" maxlength="50" placeholder="（必填）例如：南昌理工教师调查问卷"/>
+                    </div>
+                    <!-- 问卷类型 -->
+                    <div id="exam_type" class="form-group">
+                        <label>题目类型</label>
+                        <select  name="type" class="form-control">
+                            <option th:value="学生">1、学生</option>
+                            <option th:value="老师">2、老师</option>
+                        </select>
+                    </div>
+                    <!-- 题目数量 -->
+                    <!--<div class="form-group">
+                        <label>备注信息</label>
+                        <input name="naireRemarks" type="text"
+                               class="form-control" maxlength="50" placeholder="（必填）例如：南昌理工学院指导工作，"/>
+                    </div>-->
+                </div>
+                <!-- 判断是否是查看详情 -->
+                <button type="submit" class="btn btn-primary" th:text="添加"></button>
+            </form>
+
+        </main>
+    </div>
+</div>
+</body>
+</html>
