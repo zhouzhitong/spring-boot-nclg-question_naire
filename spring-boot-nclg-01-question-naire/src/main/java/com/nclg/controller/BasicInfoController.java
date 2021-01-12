@@ -6,6 +6,7 @@ import com.nclg.entity.Subject;
 import com.nclg.mapper.ClassesMapper;
 import com.nclg.mapper.DepartmentMapper;
 import com.nclg.mapper.SubjectMapper;
+import jdk.nashorn.internal.runtime.logging.Logger;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ import java.util.List;
  * @date 2020/10/11 15:43
  **/
 @Controller
+@Logger
 @RequestMapping(value = "/admin/basicInfo")
 public class BasicInfoController {
     @Resource
@@ -36,7 +38,7 @@ public class BasicInfoController {
     }
 
     @GetMapping(value = {"/addDepart", "/addDepart/"})
-    public String addDepartment() {
+    public String toAddDepartment() {
         return "admin/basic_info/department_add";
     }
 

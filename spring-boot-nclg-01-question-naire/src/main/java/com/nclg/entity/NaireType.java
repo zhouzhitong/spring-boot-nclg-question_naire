@@ -1,6 +1,7 @@
 package com.nclg.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * (NaireType)实体类
@@ -9,6 +10,7 @@ import lombok.Data;
  * @since 2020-09-20 09:49:51
  */
 @Data
+@Accessors(chain = true)
 public class NaireType {
     /**
      * 自增主键ID

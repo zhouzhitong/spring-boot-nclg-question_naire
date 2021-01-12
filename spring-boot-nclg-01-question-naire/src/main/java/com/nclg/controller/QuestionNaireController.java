@@ -1,12 +1,15 @@
 package com.nclg.controller;
 
+import com.nclg.entity.NaireType;
 import com.nclg.entity.Questionnaire;
+import com.nclg.mapper.NaireTypeMapper;
 import com.nclg.mapper.QuestionnaireMapper;
 import com.nclg.query.NaireTypeVoQuery;
 import com.nclg.query.QuestionNaireVoQuery;
 import com.nclg.service.ExamInfoService;
 import com.nclg.vo.NaireExamVo;
 import com.nclg.vo.NaireTypeVo;
+import jdk.nashorn.internal.runtime.logging.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +26,10 @@ import java.util.List;
  *
  * @author 周志通
  * @version 1.0.0
- * @date 2020/9/20 8:37
  **/
 @Controller
 @RequestMapping(value = "/admin/paper")
+@Logger
 public class QuestionNaireController {
 
     @Resource
@@ -35,8 +38,8 @@ public class QuestionNaireController {
     private ExamInfoService examInfoService;
     @Resource
     private QuestionNaireVoQuery questionNaireVoQuery;
-    @Resource
-    private NaireTypeVoQuery naireTypeVoQuery;
+//    @Resource
+//    private NaireTypeVoQuery naireTypeVoQuery;
 
     /**
      * 问卷的详细信息
@@ -48,7 +51,7 @@ public class QuestionNaireController {
     @GetMapping("/info/{id}")
     public String paperOneInfo(@PathVariable(value = "id") Long id, Model model) {
         List<NaireExamVo> naireExamVos = questionNaireVoQuery.findOneByIdToGetAllInfo(id);
-        NaireTypeVo naireTypeVo = naireTypeVoQuery.findOneByNaireId(id);
+//        NaireTypeVo naireTypeVo = naireTypeVoQuery.findOneByNaireId(id);
         Questionnaire questionnaire = questionnaireMapper.getById(id);
         System.out.println(questionnaire);
         model.addAttribute("naireExamVos", naireExamVos);
@@ -57,7 +60,7 @@ public class QuestionNaireController {
     }
 
     /**
-     * 所有问卷信息
+     * 列出所有问卷信息
      *
      * @param model 所有问卷信息
      * @return admin/paper/paperList.html
@@ -69,16 +72,37 @@ public class QuestionNaireController {
         return "admin/paper/paperList";
     }
 
+    @Resource
+    private NaireTypeMapper naireTypeMapper;
+
+    /**
+     * 添加问卷信息
+     *
+     * @param questionnaire
+     * @return
+     */
     @PostMapping(value = {"/edit"})
     public String doPaperInsert(Questionnaire questionnaire) {
         questionnaire.setNaireDate(new Date());
         questionnaireMapper.insert(questionnaire);
-        System.out.println(questionnaire);
+        NaireType naireType = new NaireType();
+        naireType.setNaireId(questionnaire.getId())
+                .setType(questionnaire.getType())
+                .setDepartmentId(0)
+                .setSubjectId(0)
+                .setClassesId(0);
+        naireTypeMapper.insert(naireType);
         return "redirect:/admin/paper/paperList";
     }
 
+    /**
+     * 删除问卷
+     *
+     * @param qnId 问卷 ID
+     * @return
+     */
     @DeleteMapping(value = {"/edit/{id}"})
-    public String deletePaperInfo(@PathVariable("id") Long qnId){
+    public String deletePaperInfo(@PathVariable("id") Long qnId) {
         examInfoService.deleteQuestionNaire(qnId);
         return "redirect:/admin/paper/paperList";
     }

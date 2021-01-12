@@ -4,10 +4,7 @@ import com.nclg.entity.ExamAnswer;
 import com.nclg.entity.ExamInfo;
 import com.nclg.entity.Naireexam;
 import com.nclg.entity.Questionnaire;
-import com.nclg.mapper.ExamAnswerMapper;
-import com.nclg.mapper.ExamInfoMapper;
-import com.nclg.mapper.NaireexamMapper;
-import com.nclg.mapper.QuestionnaireMapper;
+import com.nclg.mapper.*;
 import com.nclg.service.ExamInfoService;
 import com.nclg.util.ExamDataTransformUtils;
 import com.nclg.util.ImportExcelUtils;
@@ -25,7 +22,6 @@ import java.util.List;
  *
  * @author 周志通
  * @version 1.0.0
- * @date 2020/9/20 15:39
  **/
 @Service
 public class ExamInfoServiceImpl implements ExamInfoService {
@@ -34,6 +30,8 @@ public class ExamInfoServiceImpl implements ExamInfoService {
     private ExamAnswerMapper examAnswerMapper;
     @Resource
     private ExamInfoMapper examInfoMapper;
+    @Resource
+    private NaireTypeMapper naireTypeMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -86,6 +84,7 @@ public class ExamInfoServiceImpl implements ExamInfoService {
         for (Naireexam naireexam : naireexams) {
             deleteExamInfo(naireexam.getExamId());
         }
+        naireTypeMapper.deleteByNaireId(id);
         return questionnaireMapper.deleteById(id);
     }
 

@@ -261,6 +261,10 @@
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from question_naire.naire_type where id = #{id,jdbcType=INTEGER}
     </delete>
+    <!--通过主键删除-->
+    <delete id="deleteByNaireId" parameterType="java.lang.Long">
+        delete from question_naire.naire_type where naire_id = #{naireId}
+    </delete>
 
     <!--通过实体非空属性删除-->
     <delete id="deleteByEntity" parameterType="com.nclg.entity.NaireType">

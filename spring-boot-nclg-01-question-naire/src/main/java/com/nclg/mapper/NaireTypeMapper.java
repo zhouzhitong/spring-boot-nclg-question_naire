@@ -95,6 +95,8 @@ public interface NaireTypeMapper {
      */
     int deleteById(Integer id);
 
+    int deleteByNaireId(Long naireId);
+
     /**
      * 通过实体非空属性批量删除
      *
