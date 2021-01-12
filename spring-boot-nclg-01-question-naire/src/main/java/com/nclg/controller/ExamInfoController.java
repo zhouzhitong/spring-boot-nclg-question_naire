@@ -23,7 +23,6 @@ import java.util.List;
  *
  * @author 周志通
  * @version 1.0.1
- * @date 2020/11/23 23:50
  **/
 @Controller
 @RequestMapping(value = "/admin/examInfo")
@@ -75,6 +74,7 @@ public class ExamInfoController {
      */
     @PutMapping("/edit")
     public String updateCheckExamInfoVo(ExamInfo examInfo, HttpServletRequest request, Model model) {
+        System.out.println(examInfo);
         List<ExamAnswer> examAnswers = ExamAnswerUtils.packageExamAnswerInfo(request);
         if (examAnswers != null) {
             try {

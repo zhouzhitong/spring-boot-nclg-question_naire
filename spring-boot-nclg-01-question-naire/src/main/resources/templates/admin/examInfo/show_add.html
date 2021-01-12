@@ -59,14 +59,17 @@
                             <input hidden name="examAnswer.id" type="text" th:value="${examInfoVo!=null}?${examAnswer.id}"/>
                         </div>
                         <!-- 答案序号 -->
-                        <div class="form-group" disabled>
+                        <div class="form-group" >
                             <label>答案序号：<span th:text="${examInfoVo!=null}?${examAnswer.answerId}" class="text-info"></span></label>
-<!--                            <input name="examAnswer.answerId" type="text" th:value="${examInfoVo!=null}?${examAnswer.answerId}" th:readonly="${examInfoVo!=null}?true" class="form-control" maxlength="1" placeholder="（必填）例如：A "/>-->
+                            <input name="examAnswer.answerId" type="text" th:value="${examInfoVo!=null}?${examAnswer.answerId}" th:readonly="${examInfoVo!=null}?true" class="form-control" maxlength="1" placeholder="（必填）例如：A "/>
                         </div>
                         <!-- 答案内容 -->
                         <div class="form-group">
                             <label>答案内容</label>
-                            <input name="examAnswer.content" type="text" th:value="${examInfoVo!=null}?${examAnswer.content}" class="form-control" maxlength="50" placeholder="（必填）例如：A "/>
+                            <input name="examAnswer.content" type="text"
+                                   th:value="${examInfoVo!=null}?${examAnswer.content}"
+                                   class="form-control" maxlength="50"
+                                   placeholder="（必填）例如：A "/>
                         </div>
                         <!-- 备注信息 -->
                         <!--<div class="form-group" >

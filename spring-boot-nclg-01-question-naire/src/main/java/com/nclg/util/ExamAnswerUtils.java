@@ -13,7 +13,6 @@ import java.util.List;
  *
  * @author 周志通
  * @version 1.0.0
- * @date 2020/9/20 15:23
  **/
 public class ExamAnswerUtils {
 
@@ -32,11 +31,15 @@ public class ExamAnswerUtils {
             String[] examAnswerId = request.getParameterValues("examAnswer.id");
             String[] answerId = request.getParameterValues("examAnswer.answerId");
             String[] content = request.getParameterValues("examAnswer.content");
-            String[] remarks = request.getParameterValues("examAnswer.remarks");
+//            String[] remarks = request.getParameterValues("examAnswer.remarks");
+            System.out.println(Arrays.toString(examAnswerId));
+            System.out.println(Arrays.toString(answerId));
+            System.out.println(Arrays.toString(content));
+//            System.out.println(Arrays.toString(remarks));
             for (int i = 0; i < examAnswerId.length; i++) {
                 ExamAnswer answer = new ExamAnswer();
                 answer.setId(Long.valueOf(examAnswerId[i])).setExamId(id).setAnswerId(answerId[i])
-                        .setContent(content[i]).setRemarks(remarks[i]);
+                        .setContent(content[i]);
                 examAnswers.add(answer);
             }
             return examAnswers;
